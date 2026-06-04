@@ -1,16 +1,15 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# Sayfa ayarları (Geniş ekran)
-st.set_page_config(page_title="CargoMaster Pro v87.0", layout="wide", page_icon="🚛")
+# Sayfa ayarları
+st.set_page_config(page_title="CargoMaster Pro v89.0", layout="wide", page_icon="🚛")
 
-# Senin orijinal efsanevi HTML/JS/Three.js kodun
 app_html = """
 <div id="master-app" style="font-family: 'Inter', sans-serif; background: #fdfdfd; color: #2d3436; padding: 25px; border-radius: 20px; max-width: 1250px; margin: auto; box-shadow: 0 4px 30px rgba(0,0,0,0.08); border: 1px solid #dfe6e9;">
 
     <div style="text-align: center; border-bottom: 1px solid #dfe6e9; padding-bottom: 20px; margin-bottom: 25px;">
-        <h1 style="color: #0984e3; margin: 0; font-size: 32px; letter-spacing: 3px; font-weight: 900;">🚛 CARGOMASTER PRO v87.0</h1>
-        <p style="color: #636e72; font-size: 14px; text-transform: uppercase;">Realistic Cargo Engine • Ultra-Realistic Rollpack Textures</p>
+        <h1 style="color: #0984e3; margin: 0; font-size: 32px; letter-spacing: 3px; font-weight: 900;">🚛 CARGOMASTER PRO v89.0</h1>
+        <p style="color: #636e72; font-size: 14px; text-transform: uppercase;">Dinamik Boşluk Doldurma Motoru (Nesting & Heightmap Engine)</p>
     </div>
 
     <div style="display:flex; gap:20px; margin-bottom:20px;">
@@ -140,154 +139,74 @@ function removeItem(idx) { cargoList.splice(idx, 1); updateListView(); }
 window.removeItem = removeItem;
 
 // -------------------------------------------------------------
-// 🔥 ULTRA GERÇEKÇİ ROLLPACK DOKU MOTORU 🔥
+// 🔥 DOKU MOTORU (TEXTURE ENGINE) 🔥
 // -------------------------------------------------------------
-
 function createRollSideTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1024; canvas.height = 1024;
-    const ctx = canvas.getContext('2d');
-
-    ctx.fillStyle = '#f8f9fa';
-    ctx.fillRect(0, 0, 1024, 1024);
-
-    for(let i=0; i<1024; i+=12) {
-        ctx.fillStyle = 'rgba(0,0,0,0.03)';
-        ctx.fillRect(i, 0, 2, 1024);
-    }
-
+    const canvas = document.createElement('canvas'); canvas.width = 1024; canvas.height = 1024; const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#f8f9fa'; ctx.fillRect(0, 0, 1024, 1024);
+    for(let i=0; i<1024; i+=12) { ctx.fillStyle = 'rgba(0,0,0,0.03)'; ctx.fillRect(i, 0, 2, 1024); }
     const drawStrap = (y) => {
-        ctx.fillStyle = '#1e272e';
-        ctx.fillRect(0, y, 1024, 40);
-        ctx.fillStyle = '#218c53';
-        ctx.fillRect(0, y+5, 1024, 30);
-        for(let i=0; i<1024; i+=8) {
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
-            ctx.fillRect(i, y+5, 2, 30);
-        }
+        ctx.fillStyle = '#1e272e'; ctx.fillRect(0, y, 1024, 40);
+        ctx.fillStyle = '#218c53'; ctx.fillRect(0, y+5, 1024, 30);
+        for(let i=0; i<1024; i+=8) { ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.fillRect(i, y+5, 2, 30); }
     };
-    drawStrap(200);
-    drawStrap(784);
-
+    drawStrap(200); drawStrap(784);
     for (let lx of [100, 450, 800]) {
-        ctx.fillStyle = 'rgba(255,255,255,0.9)';
-        ctx.fillRect(lx, 460, 200, 100);
-        ctx.strokeStyle = '#2d3436';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(lx, 460, 200, 100);
-
-        ctx.fillStyle = '#d63031';
-        ctx.font = 'bold 20px Arial';
-        ctx.fillText('↑ UP ↑', lx+70, 490);
-        ctx.fillStyle = '#2d3436';
-        ctx.font = 'bold 18px Arial';
-        ctx.fillText('MEDLINE', lx+55, 520);
-        ctx.font = '12px Arial';
-        ctx.fillText('ULTRA-COMPRESSED', lx+35, 540);
+        ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.fillRect(lx, 460, 200, 100);
+        ctx.strokeStyle = '#2d3436'; ctx.lineWidth = 2; ctx.strokeRect(lx, 460, 200, 100);
+        ctx.fillStyle = '#d63031'; ctx.font = 'bold 20px Arial'; ctx.fillText('↑ UP ↑', lx+70, 490);
+        ctx.fillStyle = '#2d3436'; ctx.font = 'bold 18px Arial'; ctx.fillText('MEDLINE', lx+55, 520);
+        ctx.font = '12px Arial'; ctx.fillText('ULTRA-COMPRESSED', lx+35, 540);
     }
-
     for(let i=0; i<150; i++) {
-        ctx.beginPath();
-        ctx.moveTo(Math.random()*1024, Math.random()*1024);
+        ctx.beginPath(); ctx.moveTo(Math.random()*1024, Math.random()*1024);
         ctx.bezierCurveTo(Math.random()*1024, Math.random()*1024, Math.random()*1024, Math.random()*1024, Math.random()*1024, Math.random()*1024);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random()*0.7})`;
-        ctx.lineWidth = Math.random()*8;
-        ctx.stroke();
+        ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random()*0.7})`; ctx.lineWidth = Math.random()*8; ctx.stroke();
     }
-
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.wrapT = THREE.RepeatWrapping;
-    return tex;
+    const tex = new THREE.CanvasTexture(canvas); tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping; return tex;
 }
 
 function createRollCapTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512; canvas.height = 512;
-    const ctx = canvas.getContext('2d');
-
-    ctx.fillStyle = '#f8f9fa';
-    ctx.fillRect(0, 0, 512, 512);
-
-    const cx = 256, cy = 256;
-
+    const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 512; const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#f8f9fa'; ctx.fillRect(0, 0, 512, 512); const cx = 256, cy = 256;
     for(let r=15; r<240; r+=18) {
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, 2*Math.PI);
-        ctx.strokeStyle = 'rgba(0,0,0,0.15)';
-        ctx.lineWidth = 6 + Math.random()*4;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(cx, cy, r-3, 0, 2*Math.PI);
-        ctx.strokeStyle = 'rgba(0,0,0,0.05)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2*Math.PI); ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 6 + Math.random()*4; ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, r-3, 0, 2*Math.PI); ctx.strokeStyle = 'rgba(0,0,0,0.05)'; ctx.lineWidth = 2; ctx.stroke();
     }
-
-    ctx.save();
-    ctx.translate(cx, cy);
+    ctx.save(); ctx.translate(cx, cy);
     for(let angle=0; angle<2; angle++) {
         ctx.rotate(Math.PI/2 * angle + Math.PI/4);
-        ctx.fillStyle = '#1e272e';
-        ctx.fillRect(-256, -20, 512, 40);
-        ctx.fillStyle = '#218c53';
-        ctx.fillRect(-256, -15, 512, 30);
-        for(let i=-256; i<256; i+=8) {
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
-            ctx.fillRect(i, -15, 2, 30);
-        }
+        ctx.fillStyle = '#1e272e'; ctx.fillRect(-256, -20, 512, 40);
+        ctx.fillStyle = '#218c53'; ctx.fillRect(-256, -15, 512, 30);
+        for(let i=-256; i<256; i+=8) { ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.fillRect(i, -15, 2, 30); }
     }
     ctx.restore();
-
     for(let i=0; i<100; i++) {
-        ctx.beginPath();
-        ctx.moveTo(Math.random()*512, Math.random()*512);
+        ctx.beginPath(); ctx.moveTo(Math.random()*512, Math.random()*512);
         ctx.bezierCurveTo(Math.random()*512, Math.random()*512, Math.random()*512, Math.random()*512, Math.random()*512, Math.random()*512);
-        ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random()*0.8})`;
-        ctx.lineWidth = Math.random()*6;
-        ctx.stroke();
+        ctx.strokeStyle = `rgba(255, 255, 255, ${Math.random()*0.8})`; ctx.lineWidth = Math.random()*6; ctx.stroke();
     }
-
-    const tex = new THREE.CanvasTexture(canvas);
-    return tex;
+    return new THREE.CanvasTexture(canvas);
 }
-// -------------------------------------------------------------
 
 function createPlywoodTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512; canvas.height = 512;
-    const ctx = canvas.getContext('2d');
+    const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 512; const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#6d4c41'; ctx.fillRect(0, 0, 512, 512);
     for(let i=0; i<400; i++) {
-        ctx.strokeStyle = `rgba(0, 0, 0, ${Math.random() * 0.15})`;
-        ctx.lineWidth = Math.random() * 4;
-        ctx.beginPath();
-        let x = Math.random() * 512;
-        ctx.moveTo(x, 0); ctx.lineTo(x + (Math.random()-0.5)*15, 512);
-        ctx.stroke();
+        ctx.strokeStyle = `rgba(0, 0, 0, ${Math.random() * 0.15})`; ctx.lineWidth = Math.random() * 4;
+        ctx.beginPath(); let x = Math.random() * 512; ctx.moveTo(x, 0); ctx.lineTo(x + (Math.random()-0.5)*15, 512); ctx.stroke();
     }
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(12, 4);
-    return tex;
+    const tex = new THREE.CanvasTexture(canvas); tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(12, 4); return tex;
 }
 
 function createCorrugatedTexture() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 256; canvas.height = 256;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#b2bec3';
-    ctx.fillRect(0, 0, 256, 256);
+    const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 256; const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#b2bec3'; ctx.fillRect(0, 0, 256, 256);
     for(let i=0; i<256; i+=32) {
-        ctx.fillStyle = 'rgba(0,0,0,0.15)';
-        ctx.fillRect(i, 0, 12, 256);
-        ctx.fillStyle = 'rgba(255,255,255,0.2)';
-        ctx.fillRect(i-2, 0, 4, 256);
+        ctx.fillStyle = 'rgba(0,0,0,0.15)'; ctx.fillRect(i, 0, 12, 256);
+        ctx.fillStyle = 'rgba(255,255,255,0.2)'; ctx.fillRect(i-2, 0, 4, 256);
     }
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping;
-    return tex;
+    const tex = new THREE.CanvasTexture(canvas); tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping; return tex;
 }
 
 var materialsCache = {};
@@ -295,27 +214,16 @@ var geometriesCache = {};
 
 function getMaterial(color, style) {
     let key = color + "_" + style;
-
     if (style === "1") {
         if (!materialsCache['roll_mat_side']) {
-            let sideTex = createRollSideTexture();
-            let capTex = createRollCapTexture();
-
-            let matConfig = {
-                roughness: 0.6,
-                metalness: 0.1,
-                clearcoat: 1.0,
-                clearcoatRoughness: 0.15
-            };
-
+            let sideTex = createRollSideTexture(); let capTex = createRollCapTexture();
+            let matConfig = { roughness: 0.6, metalness: 0.1, clearcoat: 1.0, clearcoatRoughness: 0.15 };
             materialsCache['roll_mat_side'] = new THREE.MeshPhysicalMaterial({ map: sideTex, ...matConfig });
             materialsCache['roll_mat_cap'] = new THREE.MeshPhysicalMaterial({ map: capTex, ...matConfig });
         }
         return [materialsCache['roll_mat_side'], materialsCache['roll_mat_cap'], materialsCache['roll_mat_cap']];
     } else {
-        if(!materialsCache[key]) {
-            materialsCache[key] = new THREE.MeshPhysicalMaterial({ color: color, roughness: 0.2, clearcoat: 0.5 });
-        }
+        if(!materialsCache[key]) materialsCache[key] = new THREE.MeshPhysicalMaterial({ color: color, roughness: 0.2, clearcoat: 0.5 });
         return materialsCache[key];
     }
 }
@@ -323,13 +231,46 @@ function getMaterial(color, style) {
 function getGeometry(item) {
     let key = item.style + "_" + item.d + "_" + item.L + "_" + item.h;
     if(!geometriesCache[key]) {
-        if (item.style === "2") {
-            geometriesCache[key] = new THREE.BoxGeometry(item.L * 0.995, item.h * 0.98, item.d * 0.98);
-        } else {
-            geometriesCache[key] = new THREE.CylinderGeometry(item.d/2 * 0.98, item.d/2 * 0.98, item.L * 0.995, 48);
-        }
+        if (item.style === "2") geometriesCache[key] = new THREE.BoxGeometry(item.L * 0.995, item.h * 0.98, item.d * 0.98);
+        else geometriesCache[key] = new THREE.CylinderGeometry(item.d/2 * 0.98, item.d/2 * 0.98, item.L * 0.995, 48);
     }
     return geometriesCache[key];
+}
+
+// -------------------------------------------------------------
+// 🔥 YENİ: DİNAMİK BOŞLUK DOLDURMA (NESTING) MOTORU 🔥
+// -------------------------------------------------------------
+let N1, N2, effD, vSpace, startZ_even, startZ_odd, maxL;
+let slots = [];
+
+function buildDynamicGrid(style, d, h, startX, VE, VY) {
+    let isBox = (style === "2");
+    let r = d/2;
+    if (isBox) {
+        N1 = Math.floor(VE / d); if (N1 < 1) N1 = 1;
+        N2 = N1; effD = d; vSpace = h;
+        startZ_even = (VE - (N1 * d)) / 2 + (d / 2);
+        startZ_odd = startZ_even;
+    } else {
+        N1 = Math.floor(VE / d); if (N1 < 1) N1 = 1;
+        N2 = Math.max(1, N1 - 1); effD = d; vSpace = d * 0.866;
+        let centerShift = (VE - (N1 * d)) / 2;
+        startZ_even = centerShift + r;
+        startZ_odd = centerShift + d;
+    }
+    maxL = Math.floor((VY - (isBox ? h : d)) / vSpace) + 1;
+    if (maxL < 1) maxL = 1;
+    
+    slots = [];
+    for (let l = 0; l < maxL; l++) {
+        let rowQty = (l % 2 === 0) ? N1 : N2;
+        let startZ = (l % 2 === 0) ? startZ_even : startZ_odd;
+        let yCenter = (isBox ? h/2 : r) + l * vSpace;
+        slots[l] = [];
+        for (let i = 0; i < rowQty; i++) {
+            slots[l][i] = { x: startX, y: yCenter, z: startZ + i * effD };
+        }
+    }
 }
 
 function runSim() {
@@ -370,109 +311,107 @@ function init3D() {
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
     const sunLight = new THREE.DirectionalLight(0xffffff, 0.7);
-    sunLight.position.set(VB * 2, VY * 2, VE * 2);
-    sunLight.castShadow = true;
-    scene.add(sunLight);
-
+    sunLight.position.set(VB * 2, VY * 2, VE * 2); sunLight.castShadow = true; scene.add(sunLight);
     const doorLight = new THREE.PointLight(0xffffff, 0.6, VB * 1.5);
-    doorLight.position.set(VB * 1.1, VY / 2, VE / 2);
-    scene.add(doorLight);
+    doorLight.position.set(VB * 1.1, VY / 2, VE / 2); scene.add(doorLight);
 
     const floor = new THREE.Mesh(new THREE.BoxGeometry(VB, 2, VE), new THREE.MeshStandardMaterial({ map: createPlywoodTexture(), roughness: 0.9 }));
-    floor.position.set(VB/2, -1, VE/2);
-    floor.receiveShadow = true;
-    scene.add(floor);
+    floor.position.set(VB/2, -1, VE/2); floor.receiveShadow = true; scene.add(floor);
 
     const wallTex = createCorrugatedTexture();
-    const texRepeatX = Math.ceil(VB / 100);
-    const texRepeatY = Math.ceil(VY / 100);
+    const texRepeatX = Math.ceil(VB / 100); const texRepeatY = Math.ceil(VY / 100);
     wallTex.repeat.set(texRepeatX, texRepeatY);
-
     const wallMat = new THREE.MeshStandardMaterial({ map: wallTex, roughness: 0.7, metalness: 0.4, side: THREE.FrontSide });
 
-    let leftWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat);
-    leftWall.position.set(VB/2, VY/2, 0);
-    scene.add(leftWall);
-
-    let rightWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat);
-    rightWall.rotation.y = Math.PI;
-    rightWall.position.set(VB/2, VY/2, VE);
-    scene.add(rightWall);
-
-    let backWallTex = createCorrugatedTexture();
-    backWallTex.repeat.set(Math.ceil(VE / 100), texRepeatY);
+    let leftWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat); leftWall.position.set(VB/2, VY/2, 0); scene.add(leftWall);
+    let rightWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat); rightWall.rotation.y = Math.PI; rightWall.position.set(VB/2, VY/2, VE); scene.add(rightWall);
+    
+    let backWallTex = createCorrugatedTexture(); backWallTex.repeat.set(Math.ceil(VE / 100), texRepeatY);
     let backWallMat = new THREE.MeshStandardMaterial({ map: backWallTex, roughness: 0.7, metalness: 0.4, side: THREE.FrontSide });
-    let backWall = new THREE.Mesh(new THREE.PlaneGeometry(VE, VY), backWallMat);
-    backWall.rotation.y = Math.PI / 2;
-    backWall.position.set(0, VY/2, VE/2);
-    scene.add(backWall);
+    let backWall = new THREE.Mesh(new PlaneGeometry(VE, VY), backWallMat); backWall.rotation.y = Math.PI / 2; backWall.position.set(0, VY/2, VE/2); scene.add(backWall);
 
-    let ceilTex = createCorrugatedTexture();
-    ceilTex.repeat.set(texRepeatX, Math.ceil(VE / 100));
+    let ceilTex = createCorrugatedTexture(); ceilTex.repeat.set(texRepeatX, Math.ceil(VE / 100));
     let ceilMat = new THREE.MeshStandardMaterial({ map: ceilTex, roughness: 0.7, metalness: 0.4, side: THREE.FrontSide });
-    let ceiling = new THREE.Mesh(new THREE.PlaneGeometry(VB, VE), ceilMat);
-    ceiling.rotation.x = Math.PI / 2;
-    ceiling.position.set(VB/2, VY, VE/2);
-    scene.add(ceiling);
+    let ceiling = new THREE.Mesh(new THREE.PlaneGeometry(VB, VE), ceilMat); ceiling.rotation.x = Math.PI / 2; ceiling.position.set(VB/2, VY, VE/2); scene.add(ceiling);
 
     let totalV = 0, placedQty = 0, requestedQty = 0;
     let queue = [];
+    let placedItems = []; // 🔥 Dizilmiş ürünlerin haritası
 
     cargoList.forEach(sku => {
         requestedQty += sku.qty;
         for(let i=0; i<sku.qty; i++) queue.push({...sku});
     });
 
+    // Önce Çapa ve Yüksekliğe göre büyükten küçüğe sırala ki devrilmesin
     queue.sort((a,b) => {
         if (a.style !== b.style) return parseInt(b.style) - parseInt(a.style);
+        if (b.d !== a.d) return b.d - a.d;
+        if (b.h !== a.h) return b.h - a.h;
         return b.L - a.L;
     });
 
-    let firstItem = queue[0];
-    let isBox = (firstItem.style === "2");
-    let d = firstItem.d;
-    let h = firstItem.h || d;
-    let r = d/2;
+    if (queue.length === 0) return;
 
-    let N1, N2, effD, vSpace, startZ_even, startZ_odd;
-
-    if (isBox) {
-        N1 = Math.floor(VE / d); if (N1 < 1) N1 = 1;
-        N2 = N1;
-        effD = d; vSpace = h;
-        startZ_even = (VE - (N1 * d)) / 2 + (d / 2);
-        startZ_odd = startZ_even;
-    } else {
-        N1 = Math.floor(VE / d); if (N1 < 1) N1 = 1;
-        N2 = Math.max(1, N1 - 1);
-        effD = d;
-        vSpace = d * 0.866;
-        let centerShift = (VE - (N1 * d)) / 2;
-        startZ_even = centerShift + r;
-        startZ_odd = centerShift + d;
-    }
-
-    let maxL = Math.floor((VY - (isBox ? h : d)) / vSpace) + 1;
-    if (maxL < 1) maxL = 1;
-
-    let slots = [];
-    for (let l = 0; l < maxL; l++) {
-        let rowQty = (l % 2 === 0) ? N1 : N2;
-        let startZ = (l % 2 === 0) ? startZ_even : startZ_odd;
-        let yCenter = (isBox ? h/2 : r) + l * vSpace;
-        slots[l] = [];
-        for (let i = 0; i < rowQty; i++) {
-            slots[l][i] = { x: 0, y: yCenter, z: startZ + i * effD };
-        }
-    }
+    let currentStyle = queue[0].style;
+    let currentD = queue[0].d;
+    let currentH = queue[0].h || queue[0].d;
+    
+    buildDynamicGrid(currentStyle, currentD, currentH, 0, VE, VY);
 
     while(queue.length > 0) {
+        let firstQ = queue[0];
+        let firstH = firstQ.h || firstQ.d;
+
+        // 🔥 YENİ ÇAP (Örn: 34 bitti 32 başladı). Fiziksel haritayı tarayıp boşlukları bul!
+        if (firstQ.style !== currentStyle || firstQ.d !== currentD || firstH !== currentH) {
+            currentStyle = firstQ.style;
+            currentD = firstQ.d;
+            currentH = firstH;
+            
+            buildDynamicGrid(currentStyle, currentD, currentH, 0, VE, VY);
+
+            // Her bir yeni slot için, eski yerleştirilmiş ürünleri çarpışma (overlap) testine sok
+            for (let l = 0; l < maxL; l++) {
+                for (let i = 0; i < slots[l].length; i++) {
+                    let ny = slots[l][i].y;
+                    let nz = slots[l][i].z;
+                    let max_x = 0; // Eğer altı boşsa sıfırdan başlar!
+                    
+                    for (let p = 0; p < placedItems.length; p++) {
+                        let pi = placedItems[p];
+                        
+                        if (currentStyle === "2" || pi.style === "2") {
+                            let overlapY = Math.abs(ny - pi.y) < ((currentH/2) + (pi.h/2)) * 0.95;
+                            let overlapZ = Math.abs(nz - pi.z) < ((currentD/2) + (pi.d/2)) * 0.95;
+                            if (overlapY && overlapZ) {
+                                if (pi.x_end > max_x) max_x = pi.x_end;
+                            }
+                        } else {
+                            // Silindirler için YZ düzleminde gerçek merkez mesafesi kontrolü
+                            let dy = ny - pi.y;
+                            let dz = nz - pi.z;
+                            let dist = Math.sqrt(dy*dy + dz*dz);
+                            let threshold = ((currentD/2) + (pi.d/2)) * 0.95; // %5 tolerans
+                            if (dist < threshold) {
+                                if (pi.x_end > max_x) max_x = pi.x_end; // Fiziksel olarak engelliyorsa ileri it!
+                            }
+                        }
+                    }
+                    slots[l][i].x = max_x;
+                }
+            }
+        }
+
         let placedSomething = false;
         let hIdx = -1;
         let hBestSlot = null;
 
         for (let q = 0; q < queue.length; q++) {
             let item = queue[q];
+            let itemH = item.h || item.d;
+            if (item.style !== currentStyle || item.d !== currentD || itemH !== currentH) continue;
+
             let bestSlot = null;
             let currentTol = (item.style === "2") ? 0 : TOLERANCE_X;
 
@@ -489,7 +428,7 @@ function init3D() {
                         let OVERHANG = (item.style === "2") ? 0 : item.L * 0.4;
                         let safeReqX = reqX - OVERHANG;
 
-                        if (isBox) {
+                        if (item.style === "2") {
                             if (slots[l-1][i].x < safeReqX) supported = false;
                         } else {
                             if (l % 2 === 1) {
@@ -530,200 +469,26 @@ function init3D() {
             mesh.position.set(hBestSlot.x + item.L/2, slots[hBestSlot.l][hBestSlot.i].y, slots[hBestSlot.l][hBestSlot.i].z);
             scene.add(mesh);
 
-            slots[hBestSlot.l][hBestSlot.i].x = hBestSlot.x + item.L + currentTol;
+            let finalX = hBestSlot.x + item.L + currentTol;
+            slots[hBestSlot.l][hBestSlot.i].x = finalX;
+            
+            placedItems.push({
+                x_end: finalX,
+                y: slots[hBestSlot.l][hBestSlot.i].y,
+                z: slots[hBestSlot.l][hBestSlot.i].z,
+                d: item.d,
+                h: item.h,
+                style: item.style
+            });
+
             totalV += (item.style === "2") ? ((item.d * item.h * item.L) / 1000000) : ((item.d * item.d * item.L) / 1000000);
             placedQty++;
             placedSomething = true;
-
-        } else {
-            let vIdx = -1;
-            let vCapX = 0;
-            let isSidewaysBox = false;
-
-            for (let q = 0; q < queue.length; q++) {
-                let item = queue[q];
-                let currentTolForCap = (item.style === "2") ? 0 : TOLERANCE_X;
-
-                let tempCapX = 0;
-                for (let l = 0; l < maxL; l++) {
-                    let blockHeight = (item.style === "2") ? VY : item.L;
-                    if (slots[l][0].y - r < blockHeight) {
-                        for (let i = 0; i < slots[l].length; i++) {
-                            if (slots[l][i].x > tempCapX) tempCapX = slots[l][i].x;
-                        }
-                    }
-                }
-
-                if (item.style === "2") {
-                    if (tempCapX + item.d + currentTolForCap <= VB && item.L <= VE) {
-                        vIdx = q; vCapX = tempCapX; isSidewaysBox = true; break;
-                    }
-                } else {
-                    if (tempCapX + item.d + currentTolForCap <= VB && item.L <= VY) {
-                        vIdx = q; vCapX = tempCapX; isSidewaysBox = false; break;
-                    }
-                }
-            }
-
-            if (vIdx !== -1) {
-                let item = queue[vIdx];
-                let currentVX = vCapX;
-                let currentTol = (item.style === "2") ? 0 : TOLERANCE_X;
-
-                if (isSidewaysBox) {
-                    let N_z = Math.floor(VE / item.L); if (N_z < 1) N_z = 1;
-                    let N_y = Math.floor(VY / item.h);
-                    let needed = N_z * N_y;
-
-                    while (currentVX + item.d + currentTol <= VB && queue.length > 0) {
-                        let vGroup = [];
-                        for (let q = queue.length - 1; q >= 0; q--) {
-                            if (queue[q].style === item.style && queue[q].d === item.d && queue[q].L === item.L && queue[q].h === item.h) {
-                                vGroup.push(queue.splice(q, 1)[0]);
-                                if (vGroup.length === needed) break;
-                            }
-                        }
-                        if (vGroup.length === 0) break;
-
-                        let currentY = item.h / 2;
-                        let zIdx = 0;
-                        let startZ = (VE - (N_z * item.L)) / 2 + item.L / 2;
-
-                        for (let k = 0; k < vGroup.length; k++) {
-                            let vItem = vGroup[k];
-                            let mesh = new THREE.Mesh(getGeometry(vItem), getMaterial(vItem.color, vItem.style));
-                            mesh.rotation.y = Math.PI / 2;
-                            let posZ = startZ + zIdx * vItem.L;
-                            mesh.position.set(currentVX + vItem.d / 2, currentY, posZ);
-                            scene.add(mesh);
-                            totalV += (vItem.d * vItem.h * vItem.L) / 1000000; placedQty++;
-                            zIdx++;
-                            if (zIdx >= N_z) { zIdx = 0; currentY += vItem.h; }
-                        }
-                        currentVX += item.d + currentTol;
-                        if (vGroup.length < needed) break;
-                    }
-                    for (let l = 0; l < maxL; l++) {
-                        for (let i = 0; i < slots[l].length; i++) slots[l][i].x = VB;
-                    }
-                    placedSomething = true;
-
-                } else {
-                    let N_vert = Math.floor(VE / item.d); if (N_vert < 1) N_vert = 1;
-                    let effD_vert = item.d;
-                    let centerShiftVert = (VE - (N_vert * item.d)) / 2;
-                    let startZ_vert = centerShiftVert + (item.d / 2);
-                    let placedVertRows = 0;
-
-                    while (currentVX + item.d + currentTol <= VB && queue.length > 0) {
-                        let vGroup = [];
-                        for (let q = queue.length - 1; q >= 0; q--) {
-                            if (queue[q].style === item.style && queue[q].d === item.d && queue[q].L === item.L) {
-                                vGroup.push(queue.splice(q, 1)[0]);
-                                if (vGroup.length === N_vert) break;
-                            }
-                        }
-                        if (vGroup.length === 0) break;
-
-                        for(let k=0; k < vGroup.length; k++) {
-                            let vItem = vGroup[k];
-                            let mesh = new THREE.Mesh(getGeometry(vItem), getMaterial(vItem.color, vItem.style));
-                            mesh.position.set(currentVX + vItem.d/2, vItem.L/2, startZ_vert + k * effD_vert);
-                            scene.add(mesh);
-                            totalV += (vItem.d * vItem.d * vItem.L) / 1000000; placedQty++;
-                        }
-                        currentVX += item.d + currentTol;
-                        placedVertRows++;
-                        if (vGroup.length < N_vert) break;
-                    }
-
-                    let platformEndX = currentVX;
-                    let remainingHeight = VY - item.L;
-
-                    if (placedVertRows > 0 && remainingHeight >= item.d) {
-                        let cap_d = item.d;
-                        let cap_r = cap_d / 2;
-                        let cap_L = item.L;
-
-                        let N_z = Math.floor(VE / cap_L);
-
-                        if (N_z >= 1) {
-                            let startZ_cap = (VE - (N_z * cap_L)) / 2 + (cap_L / 2);
-
-                            if (placedVertRows === 1) {
-                                let capMaxY = Math.floor(remainingHeight / cap_d);
-                                let xCenter = vCapX + cap_r;
-
-                                for (let cY = 0; cY < capMaxY; cY++) {
-                                    let yCenter = item.L + cap_r + (cY * cap_d);
-
-                                    for (let zi = 0; zi < N_z; zi++) {
-                                        let posZ = startZ_cap + (zi * cap_L);
-
-                                        let capItemIdx = queue.findIndex(it => it.style === item.style && it.d === cap_d && it.L === cap_L);
-                                        if (capItemIdx !== -1) {
-                                            let cItem = queue.splice(capItemIdx, 1)[0];
-                                            let mesh = new THREE.Mesh(getGeometry(cItem), getMaterial(cItem.color, cItem.style));
-
-                                            mesh.rotation.x = Math.PI / 2;
-
-                                            mesh.position.set(xCenter, yCenter, posZ);
-                                            scene.add(mesh);
-                                            totalV += (cItem.d * cItem.d * cItem.L) / 1000000;
-                                            placedQty++;
-                                        }
-                                    }
-                                }
-                            } else {
-                                let cap_vSpace = cap_d * 0.866;
-                                let capMaxY = Math.floor((remainingHeight - cap_d) / cap_vSpace) + 1;
-                                if(capMaxY < 1) capMaxY = 1;
-
-                                let N_x1 = placedVertRows;
-                                let N_x2 = N_x1 - 1;
-                                let startX_even = vCapX + cap_r;
-                                let startX_odd = vCapX + cap_d;
-
-                                for (let cY = 0; cY < capMaxY; cY++) {
-                                    let yCenter = item.L + cap_r + (cY * cap_vSpace);
-                                    if (yCenter + cap_r > VY) break;
-
-                                    let rowQtyX = (cY % 2 === 0) ? N_x1 : N_x2;
-                                    let startX = (cY % 2 === 0) ? startX_even : startX_odd;
-
-                                    for (let xi = 0; xi < rowQtyX; xi++) {
-                                        let xCenter = startX + (xi * cap_d);
-
-                                        for (let zi = 0; zi < N_z; zi++) {
-                                            let posZ = startZ_cap + (zi * cap_L);
-
-                                            let capItemIdx = queue.findIndex(it => it.style === item.style && it.d === cap_d && it.L === cap_L);
-                                            if (capItemIdx !== -1) {
-                                                let cItem = queue.splice(capItemIdx, 1)[0];
-                                                let mesh = new THREE.Mesh(getGeometry(cItem), getMaterial(cItem.color, cItem.style));
-
-                                                mesh.rotation.x = Math.PI / 2;
-
-                                                mesh.position.set(xCenter, yCenter, posZ);
-                                                scene.add(mesh);
-                                                totalV += (cItem.d * cItem.d * cItem.L) / 1000000;
-                                                placedQty++;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    for (let l = 0; l < maxL; l++) {
-                        for (let i = 0; i < slots[l].length; i++) slots[l][i].x = VB;
-                    }
-                    placedSomething = true;
-                }
-            }
         }
-        if (!placedSomething) break;
+
+        if (!placedSomething) {
+            queue.shift(); // O çapa ait sığan kalmadıysa döngüden çıkar
+        }
     }
 
     document.getElementById('r_vol').innerText = totalV.toFixed(2) + ' m³';
@@ -739,5 +504,5 @@ updateModelDropdown();
 </script>
 """
 
-# Streamlit sayfasına 1200px yükseklikte direkt olarak render ediyoruz
+# HTML Bileşenini 1200px yükseklikte render ediyoruz
 components.html(app_html, height=1200, scrolling=True)
