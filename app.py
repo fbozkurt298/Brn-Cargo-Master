@@ -326,9 +326,10 @@ function init3D() {
     let leftWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat); leftWall.position.set(VB/2, VY/2, 0); scene.add(leftWall);
     let rightWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat); rightWall.rotation.y = Math.PI; rightWall.position.set(VB/2, VY/2, VE); scene.add(rightWall);
     
+    # 🔥 DÜZELTİLEN SATIR BURASI: THREE.PlaneGeometry
     let backWallTex = createCorrugatedTexture(); backWallTex.repeat.set(Math.ceil(VE / 100), texRepeatY);
     let backWallMat = new THREE.MeshStandardMaterial({ map: backWallTex, roughness: 0.7, metalness: 0.4, side: THREE.FrontSide });
-    let backWall = new THREE.Mesh(new PlaneGeometry(VE, VY), backWallMat); backWall.rotation.y = Math.PI / 2; backWall.position.set(0, VY/2, VE/2); scene.add(backWall);
+    let backWall = new THREE.Mesh(new THREE.PlaneGeometry(VE, VY), backWallMat); backWall.rotation.y = Math.PI / 2; backWall.position.set(0, VY/2, VE/2); scene.add(backWall);
 
     let ceilTex = createCorrugatedTexture(); ceilTex.repeat.set(texRepeatX, Math.ceil(VE / 100));
     let ceilMat = new THREE.MeshStandardMaterial({ map: ceilTex, roughness: 0.7, metalness: 0.4, side: THREE.FrontSide });
@@ -336,14 +337,13 @@ function init3D() {
 
     let totalV = 0, placedQty = 0, requestedQty = 0;
     let queue = [];
-    let placedItems = []; // 🔥 Dizilmiş ürünlerin haritası
+    let placedItems = [];
 
     cargoList.forEach(sku => {
         requestedQty += sku.qty;
         for(let i=0; i<sku.qty; i++) queue.push({...sku});
     });
 
-    // Önce Çapa ve Yüksekliğe göre büyükten küçüğe sırala ki devrilmesin
     queue.sort((a,b) => {
         if (a.style !== b.style) return parseInt(b.style) - parseInt(a.style);
         if (b.d !== a.d) return b.d - a.d;
@@ -363,7 +363,6 @@ function init3D() {
         let firstQ = queue[0];
         let firstH = firstQ.h || firstQ.d;
 
-        // 🔥 YENİ ÇAP (Örn: 34 bitti 32 başladı). Fiziksel haritayı tarayıp boşlukları bul!
         if (firstQ.style !== currentStyle || firstQ.d !== currentD || firstH !== currentH) {
             currentStyle = firstQ.style;
             currentD = firstQ.d;
@@ -371,12 +370,11 @@ function init3D() {
             
             buildDynamicGrid(currentStyle, currentD, currentH, 0, VE, VY);
 
-            // Her bir yeni slot için, eski yerleştirilmiş ürünleri çarpışma (overlap) testine sok
             for (let l = 0; l < maxL; l++) {
                 for (let i = 0; i < slots[l].length; i++) {
                     let ny = slots[l][i].y;
                     let nz = slots[l][i].z;
-                    let max_x = 0; // Eğer altı boşsa sıfırdan başlar!
+                    let max_x = 0; 
                     
                     for (let p = 0; p < placedItems.length; p++) {
                         let pi = placedItems[p];
@@ -388,13 +386,12 @@ function init3D() {
                                 if (pi.x_end > max_x) max_x = pi.x_end;
                             }
                         } else {
-                            // Silindirler için YZ düzleminde gerçek merkez mesafesi kontrolü
                             let dy = ny - pi.y;
                             let dz = nz - pi.z;
                             let dist = Math.sqrt(dy*dy + dz*dz);
-                            let threshold = ((currentD/2) + (pi.d/2)) * 0.95; // %5 tolerans
+                            let threshold = ((currentD/2) + (pi.d/2)) * 0.95; 
                             if (dist < threshold) {
-                                if (pi.x_end > max_x) max_x = pi.x_end; // Fiziksel olarak engelliyorsa ileri it!
+                                if (pi.x_end > max_x) max_x = pi.x_end; 
                             }
                         }
                     }
@@ -487,7 +484,7 @@ function init3D() {
         }
 
         if (!placedSomething) {
-            queue.shift(); // O çapa ait sığan kalmadıysa döngüden çıkar
+            queue.shift(); 
         }
     }
 
