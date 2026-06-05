@@ -326,7 +326,7 @@ function init3D() {
     let leftWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat); leftWall.position.set(VB/2, VY/2, 0); scene.add(leftWall);
     let rightWall = new THREE.Mesh(new THREE.PlaneGeometry(VB, VY), wallMat); rightWall.rotation.y = Math.PI; rightWall.position.set(VB/2, VY/2, VE); scene.add(rightWall);
     
-    # 🔥 DÜZELTİLEN SATIR BURASI: THREE.PlaneGeometry
+    // JS yorum satırı kullanıldı, Python yorumu kaldırıldı.
     let backWallTex = createCorrugatedTexture(); backWallTex.repeat.set(Math.ceil(VE / 100), texRepeatY);
     let backWallMat = new THREE.MeshStandardMaterial({ map: backWallTex, roughness: 0.7, metalness: 0.4, side: THREE.FrontSide });
     let backWall = new THREE.Mesh(new THREE.PlaneGeometry(VE, VY), backWallMat); backWall.rotation.y = Math.PI / 2; backWall.position.set(0, VY/2, VE/2); scene.add(backWall);
